@@ -40,7 +40,36 @@ app.post("/books/save", upload.single('image'), async (req, res) => {
     }
 });
 
+app.get("/books", async (req, res) => {
+    try {
+        const books = await Books.findAll();
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).send('Erro ao listar livros');
+    }
+});
+
+app.get("/books/:id", async (req, res) => {
+    if (isNaN(req.params.id)) {
+        res.sendStatus(400);
+    } else {
+        const id = parseInt(req.params.id);
+        try {
+            const book = await Books.findByPk(id); 
+
+            if (book) { 
+                res.statusCode = 200;
+                res.json(book);
+            } else {
+                res.sendStatus(404); 
+            }
+        } catch (error) {
+            res.sendStatus(404); 
+        }
+    }
+});
+
+
 app.listen(8000, () => {
     console.log("O servidor está rodando");
 });
-    
