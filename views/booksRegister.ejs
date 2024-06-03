@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Livros</title>
+</head>
+<body>
+    <h1>Cadastro de Livros</h1>
+
+    <form id="bookForm" method="POST" action="/books/save" enctype="multipart/form-data">
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" required><br>
+
+        <label for="author">Autor:</label>
+        <input type="text" id="author" name="author" required><br>
+
+        <label for="price">Preço:</label>
+        <input type="number" id="price" name="price" required><br>
+
+        <label for="synopsis">Sinopse:</label>
+        <textarea id="synopsis" name="synopsis" required></textarea><br>
+
+        <label for="imageUpload">Upload de Imagem:</label>
+        <input type="file" id="imageUpload" name="image" accept="image/png, image/jpeg" class="imageUpload"><br>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+</html>
