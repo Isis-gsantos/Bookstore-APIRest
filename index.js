@@ -49,7 +49,7 @@ app.get("/books", async (req, res) => {
     }
 });
 
-app.get("/books/:id", async (req, res) => {
+app.get("/book/:id", async (req, res) => {
     if (isNaN(req.params.id)) {
         res.sendStatus(400);
     } else {
@@ -69,6 +69,79 @@ app.get("/books/:id", async (req, res) => {
     }
 });
 
+app.post("/book", (req, res) => {
+    const { title, author, price, synopsis, imagePath } = req.body;
+
+    try {
+        Books.create({
+            title,
+            author,
+            price,
+            synopsis,
+            imagePath
+        });
+        res.sendStatus(200);
+    } catch {
+        res.status(500).send("Erro ao adicionar livro");
+    }
+});
+
+app.delete("/book/:id", async (req, res) => {
+    if (isNaN(req.params.id)) {
+        res.sendStatus(400);
+    } else {
+        const id = parseInt(req.params.id);
+        try {
+            const book = await Books.findByPk(id); 
+
+            if (book) { 
+                await book.destroy(); 
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch (error) {
+            res.status(500).send("Erro ao deletar livro");
+        }
+    }
+});
+
+app.put("/book/:id", async (req, res) => {
+    if(isNaN(req.params.id)) {
+        res.sendStatus(400);
+    } else {
+        const id = parseInt(req.params.id);
+        const book = await Books.findByPk(id); 
+
+        if(book != undefined) {
+            const { title, author, price, synopsis, imagePath } = req.body;
+
+            if(title != undefined) {
+                book.title = title;
+            }
+
+            if(author != undefined) {
+                book.author = author;
+            }
+
+            if(price != undefined) {
+                book.price = price;
+            }
+
+            if(synopsis != undefined) {
+                book.synopsis = synopsis;
+            }
+
+            if(imagePath != undefined) {
+                book.imagePath = imagePath;
+            }
+            
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(404);
+        }
+    }
+});
 
 app.listen(8000, () => {
     console.log("O servidor está rodando");
