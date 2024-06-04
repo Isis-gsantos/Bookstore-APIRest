@@ -1,14 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Livraria</title>
+  <link rel="stylesheet" href="public/sass/style.css">
 </head>
 
 <body>
-    
-</body>
+  <header>
+    <h1>Estante Virtual</h1>
 
-<script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <input type="text" placeholder="Buscar">
+
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+  </header>
+
+  <main class="container">
+    <h2>Lista de Livros</h2>
+    <ul id="books" class="card"></ul> </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+  <script>
+    axios.get("http://localhost:8000/books")
+      .then(response => {
+        const books = response.data;
+        const bookList = document.getElementById("books");
+
+        books.forEach(book => {
+          const bookItem = document.createElement("li");
+          bookItem.classList.add("book");
+
+          const bookTitle = document.createElement("h3");
+          bookTitle.classList.add("book-title");
+          bookTitle.textContent = book.title;
+
+          const bookImage = document.createElement("img");
+          bookImage.classList.add("book-img");
+          bookImage.src = book.imagePath;
+          bookImage.alt = "Book Image";
+
+          const bookPrice = document.createElement("span");
+          bookPrice.classList.add("price");
+          bookPrice.textContent = "R$ " + book.price;
+
+          const bookSynopsis = document.createElement("p");
+          bookSynopsis.classList.add("synopsis");
+          bookSynopsis.textContent = book.synopsis;
+
+          bookItem.appendChild(bookTitle);
+          bookItem.appendChild(bookImage);
+          bookItem.appendChild(bookPrice);
+          bookItem.appendChild(bookSynopsis);
+
+          bookList.appendChild(bookItem);
+        });
+      })
+      .catch(err => {
+        console.error("Error fetching books:", err);
+      });
+  </script>
+</body>
 </html>

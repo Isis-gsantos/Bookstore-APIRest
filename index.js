@@ -3,11 +3,13 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
 const Books = require("./database/Books");
+const cors = require("cors");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.set("view engine", "ejs");
+app.use(cors());
 
 const upload = require("./middleware/imageUpload");
 
@@ -107,41 +109,35 @@ app.delete("/book/:id", async (req, res) => {
 });
 
 app.put("/book/:id", async (req, res) => {
-    if(isNaN(req.params.id)) {
-        res.sendStatus(400);
-    } else {
-        const id = parseInt(req.params.id);
-        const book = await Books.findByPk(id); 
-
-        if(book != undefined) {
-            const { title, author, price, synopsis, imagePath } = req.body;
-
-            if(title != undefined) {
-                book.title = title;
-            }
-
-            if(author != undefined) {
-                book.author = author;
-            }
-
-            if(price != undefined) {
-                book.price = price;
-            }
-
-            if(synopsis != undefined) {
-                book.synopsis = synopsis;
-            }
-
-            if(imagePath != undefined) {
-                book.imagePath = imagePath;
-            }
-            
-            res.sendStatus(200);
-        } else {
-            res.sendStatus(404);
-        }
+    if (isNaN(req.params.id)) {
+      res.sendStatus(400);
+      return;
     }
-});
+  
+    const id = parseInt(req.params.id);
+    const book = await Books.findByPk(id);
+  
+    if (!book) {
+      res.sendStatus(404);
+      return;
+    }
+  
+    const { title, author, price, synopsis, imagePath } = req.body;
+    book.title = title || book.title; 
+    book.author = author || book.author;
+    book.price = price || book.price;
+    book.synopsis = synopsis || book.synopsis;
+    book.imagePath = imagePath || book.imagePath;
+  
+    try {
+      await book.save();
+      res.sendStatus(200);
+    } catch (error) {
+      console.error("Erro ao atualizar livro:", error);
+      res.status(500).send("Erro ao atualizar livro");
+    }
+  });
+  
 
 app.listen(8000, () => {
     console.log("O servidor está rodando");
