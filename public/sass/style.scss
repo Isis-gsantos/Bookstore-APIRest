@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url("./variables.scss");
 
 * {
     margin: 0;
@@ -7,40 +8,128 @@
     font-family: "Poppins", sans-serif;
 }
 
+body {
+    background-color: $bodyColor;
+}
+
 header {
     padding: 30px;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    background-color: $headerColor;
+
+    @media(max-width: 750px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .search {
+            margin: 20px 0;
+        }
+    }
+    
+    h1 {
+        color: $white;
+        font-weight: 400;
+    }
+
+    .search {
+        position: relative;
+
+        input {
+            padding: 5px 10px;
+            width: 200px;
+            border-radius: 20px;
+            border: none;
+        }
+
+        .btn {
+            position: absolute;
+            right: 4%;
+            top: 20%;
+            border: none;
+            background-color: transparent;
+
+            i {
+                font-size: 15px;
+            }
+        }
+    }
+
+    .icons {
+        display: flex;
+        justify-content: center;
+        gap: 26px;
+        font-size: 22px;
+
+        a {
+            i {
+                color: $white;
+            }
+        }
+    }
 }
 
 .container {
     margin: 30px;
+
+    h2 {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 400;
+    }
 }
 
 .card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background-color: beige;
-    li {
-        margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    
+    @media(max-width: 750px) {
         display: flex;
-        flex-direction: column;
-        // justify-content: center;
+        justify-content: center;
         align-items: center;
-
-        h3 {
-            font-size: 25px;
+        li {
+            img {
+                width: 100%;
+            }
         }
     }
 
-    img {
-        width: 300px;
-        height: 350px;
-    }
+    li {
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        align-items: center;
+        box-shadow: 0px 8px 15px 5px rgba(0,0,0,0.1);
 
-    p {
-        max-width: 350px;
+        .title {
+            font-size: 25px;
+            max-width: 500px;
+            text-align: center;
+            color: $bookTitleColor;
+            margin-bottom: 10px;
+        }
+
+        .img {
+            width: 300px;
+            height: 350px;
+        }
+
+        .price {
+            color: $priceColor;
+            margin: 10px 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+    
+        .synopsis {
+            max-width: 500px;
+            margin-top: 20px;
+        }
     }
 }
-

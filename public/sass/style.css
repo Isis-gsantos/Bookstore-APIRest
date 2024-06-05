@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+@import url("./variables.scss");
 * {
   margin: 0;
   padding: 0;
@@ -6,35 +7,112 @@
   font-family: "Poppins", sans-serif;
 }
 
+body {
+  background-color: rgb(250, 250, 250);
+}
+
 header {
   padding: 30px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  background-color: #00b4d8;
+}
+@media (max-width: 750px) {
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  header .search {
+    margin: 20px 0;
+  }
+}
+header h1 {
+  color: #fff;
+  font-weight: 400;
+}
+header .search {
+  position: relative;
+}
+header .search input {
+  padding: 5px 10px;
+  width: 200px;
+  border-radius: 20px;
+  border: none;
+}
+header .search .btn {
+  position: absolute;
+  right: 4%;
+  top: 20%;
+  border: none;
+  background-color: transparent;
+}
+header .search .btn i {
+  font-size: 15px;
+}
+header .icons {
+  display: flex;
+  justify-content: center;
+  gap: 26px;
+  font-size: 22px;
+}
+header .icons a i {
+  color: #fff;
 }
 
 .container {
   margin: 30px;
 }
+.container h2 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 400;
+}
 
 .card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background-color: beige;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+@media (max-width: 750px) {
+  .card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card li img {
+    width: 100%;
+  }
 }
 .card li {
-  margin: 20px 0;
   display: flex;
   flex-direction: column;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
   align-items: center;
+  box-shadow: 0px 8px 15px 5px rgba(0, 0, 0, 0.1);
 }
-.card li h3 {
+.card li .title {
   font-size: 25px;
+  max-width: 500px;
+  text-align: center;
+  color: #03045e;
+  margin-bottom: 10px;
 }
-.card img {
+.card li .img {
   width: 300px;
   height: 350px;
 }
-.card p {
-  max-width: 350px;
+.card li .price {
+  color: #0077b6;
+  margin: 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+.card li .synopsis {
+  max-width: 500px;
+  margin-top: 20px;
 }/*# sourceMappingURL=style.css.map */

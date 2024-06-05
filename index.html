@@ -5,24 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Livraria</title>
   <link rel="stylesheet" href="public/sass/style.css">
+  <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
 </head>
 
 <body>
   <header>
     <h1>Estante Virtual</h1>
 
-    <input type="text" placeholder="Buscar">
+    <div class="search">
+      <input type="text" placeholder="Buscar">
+      <button class="btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
 
-    <ul>
-        <li></li>
-        <li></li>
-        <li></li>
+    <ul class="icons">
+        <a href="#"><li><i class="fa-solid fa-user"></i></li></a>
+        <a href="#"><li><i class="fa-solid fa-heart"></i></li></a>
+        <a href="#"><li><i class="fa-solid fa-cart-shopping"></i></li></a>
     </ul>
   </header>
 
   <main class="container">
-    <h2>Lista de Livros</h2>
-    <ul id="books" class="card"></ul> </main>
+    <h2>Lista de Livros </h2>
+    <ul id="books" class="card"></ul> 
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
   <script>
@@ -36,11 +41,11 @@
           bookItem.classList.add("book");
 
           const bookTitle = document.createElement("h3");
-          bookTitle.classList.add("book-title");
+          bookTitle.classList.add("title");
           bookTitle.textContent = book.title;
 
           const bookImage = document.createElement("img");
-          bookImage.classList.add("book-img");
+          bookImage.classList.add("img");
           bookImage.src = book.imagePath;
           bookImage.alt = "Book Image";
 
@@ -50,7 +55,7 @@
 
           const bookSynopsis = document.createElement("p");
           bookSynopsis.classList.add("synopsis");
-          bookSynopsis.textContent = book.synopsis;
+          bookSynopsis.innerHTML = `<b>Sinopse:</b> ${book.synopsis}`;
 
           bookItem.appendChild(bookTitle);
           bookItem.appendChild(bookImage);
